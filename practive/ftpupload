@@ -2,7 +2,7 @@ import ftplib
 import glob
 import os.path
 
-ftp = ftplib.FTP("IP")
+ftp = ftplib.FTP("IP", "id", "password")
 
 myPath = "c:\\kkk\\www\\ddd"
 myExt = "T*.js";
