@@ -1,0 +1,11 @@
+import ftplib
+
+ftpdown = ftplib.FTP("IP")
+ftpdown.login("id", "pwd")
+ftpdown.cwd("/wasapp/*/*/*/")
+
+filename="filename";
+fd = open("C:\\"+filename, "wb");
+ftpdown.retrbinary("RETR"+ filename, fd.write)
+fd.close()
+ftpdown.close()
