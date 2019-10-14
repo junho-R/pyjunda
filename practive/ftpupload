@@ -1,0 +1,16 @@
+import ftplib
+import glob
+import os.path
+
+ftp = ftplib.FTP("IP")
+
+myPath = "c:\\kkk\\www\\ddd"
+myExt = "T*.js";
+LenFilePath = len(myPath) + 1
+for a in glob.glob(os.path.join(myPath, myExt)):
+    print(a[LenFilePath:])
+    filename_send= a[LenFilePath:]
+    fd = open(myPath + "\\" + filename_send, "rb")
+    ftp.storbinary("STOR /wwww/jjj/kkk/"+ filename_send, fd)
+    fd.close()
+ftp.close()
