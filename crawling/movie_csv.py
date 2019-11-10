@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-import openpyxl
 import csv
-import pandas as pd
 
 '''
 (참고) 영화관련정보 엑셀(xlsx)형식 저장 컬럼 목록
@@ -13,18 +11,26 @@ import pandas as pd
     5) 영화배우
     6) 영화포스터
 '''
-wb = openpyxl.Workbook()
-sheet = wb.active
-sheet.append(["영화제목", "영화평점", "영화장르", "영화감독", "영화배우", "영화포스터"])
 
 # (0) HTML 파싱
 raw = requests.get("https://movie.naver.com/movie/running/current.nhn", headers={'User-Agent': 'Mozilla/5.0'})
 html = bs(raw.text, 'html.parser')
 
 # (1) 전체 컨테이너
+# find(복수는 find_all)와 select(한 개 찾을때에는 select_one) 를 이용한 방법
+# li 태그 아래에 속해있는 모든 것이 지정되어서 나옴
 movie = html.select("div.lst_wrap li")
 with open('test.csv', 'w', encoding='euc-kr', newline='') as writer_csv:
+    #a = [[10, 20], [30, 40], [50, 60]]
+    #for x, y in a:  # 리스트의 가로 한 줄(안쪽 리스트)에서 요소 두 개를 꺼냄
+        #print(x, y) -> 10, 20
+
     # (2) 전체 컨테이너가 갖고 있는 영화관련 정보
+    #반복문 사용시 몇 번째 반복문인지 확인
+    #인덱스 번호와 컬렉션의 원소를 tuple형태로 반환
+    #t = [1, 5, 7, 33, 39, 52]   -> (0, 1)
+    #for i, m  in enumerate(t):
+    #index: 0, value: 1
     for i, m in enumerate(movie):
         # (3-1) 영화제목 수집
         title = m.select_one("dt.tit a")
